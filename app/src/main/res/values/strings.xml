@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Xiaowei</string>
+    <string name="generate">Generate</string>
+    <string name="validate">Validate</string>
+    <string name="clear">Clear</string>
+    <string name="score">Score</string>
+    <string name="finish">Finish</string>
+    <string name="minus">-</string>
+    <string name="_0">0</string>
+    <string name="dot">.</string>
+    <string name="_9">9</string>
+    <string name="_8">8</string>
+    <string name="_7">7</string>
+    <string name="_6">6</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="math_quiz">Math Quiz</string>
+    <string name="n_a">N/A</string>
+    <string name="back">Back</string>
+    <string name="register">Register</string>
+    <string name="input_your_name">input your name</string>
+    <string name="correct">Correct</string>
+    <string name="your_answer">Your answer</string>
+    <string name="questions">Questions</string>
+    <string name="sortbyfault">sortByFault</string>
+    <string name="sortbycorrect">sortByCorrect</string>
+    <string name="results_and_score">Results and Score</string>
+    <string-array name="choose_right_wrong">
+        <item>All</item>
+        <item>Right</item>
+        <item>Wrong</item>
+    </string-array>
+</resources>
