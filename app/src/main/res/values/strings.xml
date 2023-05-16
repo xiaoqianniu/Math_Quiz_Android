@@ -28,6 +28,8 @@
     <string name="sortbyfault">sortByFault</string>
     <string name="sortbycorrect">sortByCorrect</string>
     <string name="results_and_score">Results and Score</string>
+    <string name="answer">Answer</string>
+    <string name="remove">Remove</string>
     <string-array name="choose_right_wrong">
         <item>All</item>
         <item>Right</item>

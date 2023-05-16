@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Xiaowei</string>
+    <string name="generate">Générer</string>
+    <string name="validate">Valider</string>
+    <string name="clear">Effacer</string>
+    <string name="score">Score</string>
+    <string name="finish">Terminer</string>
+    <string name="minus">-</string>
+    <string name="_0">0</string>
+    <string name="dot">.</string>
+    <string name="_9">9</string>
+    <string name="_8">8</string>
+    <string name="_7">7</string>
+    <string name="_6">6</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="math_quiz">Quiz de mathématiques</string>
+    <string name="n_a">N/A</string>
+    <string name="back">Retour</string>
+    <string name="register">Enregistrer</string>
+    <string name="input_your_name">Saisissez votre nom</string>
+    <string name="correct">Correct</string>
+    <string name="your_answer">Votre réponse</string>
+    <string name="questions">Questions</string>
+    <string name="sortbyfault">Trier par erreur</string>
+    <string name="sortbycorrect">Trier par correct</string>
+    <string name="results_and_score">Résultats et Score</string>
+    <string name="answer">Réponse</string>
+    <string name="remove">Supprimer</string>
+    <string-array name="choose_right_wrong">
+        <item>Tous</item>
+        <item>Correct</item>
+        <item>Incorrect</item>
+    </string-array>
+</resources>

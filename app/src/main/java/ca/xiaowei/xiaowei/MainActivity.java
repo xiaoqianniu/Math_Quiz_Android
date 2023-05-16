@@ -1,25 +1,34 @@
 package ca.xiaowei.xiaowei;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    Button dotBtn, minusBtn, generateBtn, validateBtn, clearBtn, scoreBtn, finishBtn;
+    Button dotBtn, minusBtn, generateBtn, validateBtn, clearBtn, scoreBtn, finishBtn, removeBtn;
     int buttonCount = 10;
     Button[] numberButtons = new Button[buttonCount];
     TextView operationsTextView, answerCheckTextView;
     EditText userAnswerText;
     ArrayList<QuestionModel> listOfQuestions = new ArrayList<>();
+    QuestionModel questionModel;
+    ActivityResultLauncher<Intent> infoFromResultActivity;
+    private Chronometer chronometer;
+    private long offset = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,10 +59,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         scoreBtn.setOnClickListener(this);
         finishBtn = findViewById(R.id.finish_button);
         finishBtn.setOnClickListener(this);
+        removeBtn = findViewById(R.id.remove_button);
+        removeBtn.setOnClickListener(this);
+        chronometer = findViewById(R.id.chronometer);
 
         operationsTextView = findViewById(R.id.operationDisplay);
         answerCheckTextView = findViewById(R.id.mathTitle);
         userAnswerText = findViewById(R.id.answerDisplay);
+
+
+        infoFromResultActivity = getInfoFromResultActivity();
     }
 
     @Override
@@ -88,8 +103,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (v.getId() == R.id.clear_button) {
             goToClear();
-        }
 
+        } else if (v.getId() == R.id.remove_button) {
+            goToRemove();
+        }
     }
 
     private boolean isNumberButton(View view) {
@@ -106,11 +123,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         answerCheckTextView.setText("");
 
-        QuestionModel newQuestionModel = new QuestionModel();
-        newQuestionModel.generateNewQuestion();
+        questionModel = new QuestionModel();
+        questionModel.generateNewQuestion();
 
-        String question = newQuestionModel.getQuestion();
-        double answer = newQuestionModel.getAnswer();
+        String question = questionModel.getQuestion();
+    //    double answer = questionModel.getAnswer();
         try {
             // Check if it's a division operation with the second number as zero
             if (question.equals("Invalid operation")) {
@@ -122,12 +139,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return;
             }
 
-            // Display the expression and clear the answer text view
             operationsTextView.setText(question);
             userAnswerText.setText("");
 
             userAnswerText.setEnabled(true);
             validateBtn.setEnabled(true);
+
         } catch (ArithmeticException e) {
             operationsTextView.setText("Invalid operation");
             answerCheckTextView.setText("");
@@ -136,27 +153,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             validateBtn.setEnabled(false);
             return;
         }
-        listOfQuestions.add(newQuestionModel);
-        Log.d("MainActivity", "listOfQuestions size: " + listOfQuestions.size());
+        setBaseTime();
+        chronometer.start();
     }
 
+    private void setBaseTime() {
+        chronometer.setBase(SystemClock.elapsedRealtime() - offset);
+    }
 
     private void goToValidate() {
         String operations = operationsTextView.getText().toString();
         String answerText = userAnswerText.getText().toString();
-        if (!answerText.isEmpty() && !operations.isEmpty()) {
-            // Parse the user's answer to a double
-            double userAnswer = Double.parseDouble(answerText);
-            QuestionModel currentQuestion = listOfQuestions.get(listOfQuestions.size() - 1);
 
-            if (currentQuestion.validateAnswer(userAnswer)) {
+        if (!answerText.isEmpty() && !operations.isEmpty()) {
+
+            double userAnswer = Double.parseDouble(answerText);
+            if (questionModel.validateAnswer(userAnswer)) {
                 answerCheckTextView.setText("Answer is right!");
             } else {
                 answerCheckTextView.setText("Answer is wrong!");
             }
-            currentQuestion.setUserAnswer(userAnswer);
-            int currentQuestionIndex = currentQuestion.totalQuestionCount() - 1;
-            listOfQuestions.set(currentQuestionIndex, currentQuestion);
+            questionModel.setUserAnswer(userAnswer);
+            listOfQuestions.add(questionModel);
 
         } else if (operations.isEmpty()) {
             validateBtn.setEnabled(false);
@@ -165,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             validateBtn.setEnabled(false);
             answerCheckTextView.setText("Please input answer!");
         }
-
         validateBtn.setEnabled(true);
     }
 
@@ -181,19 +198,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             answerCheckTextView.setText("No questions answered yet");
         } else {
             double percentage = (score * 100.0) / totalQuestions;
-            String message = "Score: " + score + " / " + totalQuestions + " (" + percentage + "%)";
-            answerCheckTextView.setText(message);
 
             Intent intent = new Intent(MainActivity.this, ResultActivity.class);
             Bundle bundle = new Bundle();
             intent.putExtra("percentage", percentage);
             bundle.putSerializable("bundleListOfQuestions", listOfQuestions);
-            intent.putExtra("intentListOfQuestions",bundle);
-
-
-            startActivity(intent);
+            intent.putExtra("intentListOfQuestions", bundle);
+            infoFromResultActivity.launch(intent);
         }
-
+        chronometer.stop();
     }
 
     private void goToClear() {
@@ -203,6 +216,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void goToFinish() {
+        finish();
+    }
 
+    private void goToRemove() {
+        String currentText = userAnswerText.getText().toString();
+        if (!currentText.isEmpty()) {
+            String updatedText = currentText.substring(0, currentText.length() - 1);
+            userAnswerText.setText(updatedText);
+        }
+    }
+
+    private ActivityResultLauncher<Intent> getInfoFromResultActivity() {
+        return (infoFromResultActivity = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                Intent data = result.getData();
+                if (data != null) {
+                    String receiveRegister = data.getStringExtra("intentRegister");
+                    ArrayList<QuestionModel> receiveList = (ArrayList<QuestionModel>) data.getSerializableExtra("listOfQuestions");
+                    answerCheckTextView.setText(receiveRegister);
+                    operationsTextView.setText("");
+                    userAnswerText.setText("");
+                } else {
+                    answerCheckTextView.setText("Null");
+                }
+            }
+            setBaseTime();
+        }));
     }
 }

@@ -26,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginStart="10dp"
             android:orientation="horizontal">
 
             <RadioButton
@@ -47,7 +48,8 @@
             android:layout_height="48dp"
             android:layout_gravity="center"
             android:layout_margin="16dp"
-            android:entries="@array/choose_right_wrong" />
+            android:entries="@array/choose_right_wrong"
+            android:gravity="center"/>
 
     </LinearLayout>
 
@@ -58,7 +60,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
@@ -66,13 +68,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/questions" />
+                android:text="@string/questions"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/result_questions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/n_a" />
+                android:text="@string/n_a"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -85,13 +89,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/your_answer" />
+                android:text="@string/your_answer"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/result_yourAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/n_a" />
+                android:text="@string/n_a"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -104,17 +110,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/correct" />
+                android:text="@string/answer"
+                android:textSize="20sp"/>
 
             <TextView
                 android:id="@+id/result_correctAnswer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/n_a" />
+                android:text="@string/n_a"
+                android:textSize="20sp"/>
         </LinearLayout>
 
-
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -139,7 +147,8 @@
             android:layout_width="wrap_content"
             android:layout_weight="2"
             android:layout_height="wrap_content"
-            android:hint="@string/input_your_name" />
+            android:hint="@string/input_your_name"
+            android:inputType="text"/>
     </LinearLayout>
 
     <LinearLayout

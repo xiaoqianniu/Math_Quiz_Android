@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">小微</string>
+    <string name="generate">生成</string>
+    <string name="validate">验证</string>
+    <string name="clear">清除</string>
+    <string name="score">得分</string>
+    <string name="finish">完成</string>
+    <string name="minus">-</string>
+    <string name="_0">0</string>
+    <string name="dot">.</string>
+    <string name="_9">9</string>
+    <string name="_8">8</string>
+    <string name="_7">7</string>
+    <string name="_6">6</string>
+    <string name="_5">5</string>
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="math_quiz">数学测验</string>
+    <string name="n_a">不适用</string>
+    <string name="back">返回</string>
+    <string name="register">注册</string>
+    <string name="input_your_name">输入您的姓名</string>
+    <string name="correct">正确</string>
+    <string name="your_answer">您的答案</string>
+    <string name="questions">问题</string>
+    <string name="sortbyfault">按错误排序</string>
+    <string name="sortbycorrect">按正确排序</string>
+    <string name="results_and_score">结果和得分</string>
+    <string name="answer">答案</string>
+    <string name="remove">删除</string>
+    <string-array name="choose_right_wrong">
+        <item>全部</item>
+        <item>正确</item>
+        <item>错误</item>
+    </string-array>
+</resources>

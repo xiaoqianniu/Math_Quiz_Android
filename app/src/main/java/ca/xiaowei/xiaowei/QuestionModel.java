@@ -11,7 +11,6 @@ public class QuestionModel implements Serializable,Comparable<QuestionModel>{
     private int score;
     private int answeredQuestionCount;
     private  boolean isAnswered;
-
     private double userAnswer;
 
     public QuestionModel() {
